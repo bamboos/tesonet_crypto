@@ -229,4 +229,8 @@ return [
 
     ],
 
+    'cryptonator' => [
+        'url' => 'https://api.cryptonator.com/api/ticker/'
+    ]
+
 ];

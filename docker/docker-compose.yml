@@ -1,0 +1,31 @@
+version: '3'
+services:
+  web:
+    build: php-apache
+    restart: always
+    container_name: tesonet_web
+    working_dir: /var/www
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./..:/var/www
+      - ./php-apache/default.conf:/etc/apache2/sites-available/000-default.conf
+
+  db:
+    image: mysql
+    restart: always
+    container_name: tesonet_db
+    command: --default-authentication-plugin=mysql_native_password --secure-file-priv=NULL
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=tesonet_crypto
+      - MYSQL_ROOT_HOST=%
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+
+volumes:
+  dbdata:
+    driver: local
