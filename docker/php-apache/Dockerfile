@@ -63,5 +63,7 @@ RUN setcap 'cap_net_bind_service=+ep' /usr/sbin/apache2
 
 USER www
 
+CMD php artisan migrate && /usr/sbin/apache2ctl -DFOREGROUND
+
 # COPY default.conf /etc/apache2/sites-available/000-default.conf
 # COPY php.ini /etc/php.ini
