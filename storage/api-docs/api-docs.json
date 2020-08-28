@@ -62,9 +62,7 @@
                         "bearer": []
                     }
                 ]
-            }
-        },
-        "/assets/{id}": {
+            },
             "post": {
                 "tags": [
                     "assets"
@@ -91,6 +89,10 @@
                                     "currency": {
                                         "type": "string",
                                         "example": "BTC|ETH|IOTA"
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "example": "0.89"
                                     }
                                 },
                                 "type": "object"
@@ -164,6 +166,217 @@
                         }
                     }
                 }
+            }
+        },
+        "/assets/{id}": {
+            "get": {
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Retrieve user's asset",
+                "description": "Retrieve user's asset",
+                "operationId": "assetsGetOne",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Asset retrieved successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User should be authorized to get assets information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Update asset",
+                "description": "Update asset",
+                "operationId": "assetsUpdate",
+                "requestBody": {
+                    "description": "Pass updated asset information",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "label",
+                                    "currency",
+                                    "value"
+                                ],
+                                "properties": {
+                                    "label": {
+                                        "type": "string",
+                                        "example": "some item"
+                                    },
+                                    "currency": {
+                                        "type": "string",
+                                        "example": "BTC|ETH|IOTA"
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "example": "0.89"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Asset updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Asset created successfully"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": "Asset object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "bool",
+                                            "example": "false"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "example": "Errors object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorised",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthorised"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "assets"
+                ],
+                "summary": "Delete user's asset",
+                "description": "Delete user's asset",
+                "operationId": "assetsDelete",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "bool",
+                                            "example": "true"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Asset deleted successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "User should be authorized to get assets information",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         },
         "/login": {

@@ -17,7 +17,7 @@ class CreateAssetsTable extends Migration
             $table->increments('id');
             $table->string('label');
             $table->enum('currency', ['BTC', 'ETH', 'IOTA']);
-            $table->decimal('value', 8,2, true);
+            $table->decimal('value', 20,10, true);
             $table->timestamps();
         });
     }

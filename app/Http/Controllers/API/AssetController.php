@@ -39,8 +39,32 @@ use Illuminate\Validation\Rule;
  *    )
  * )
  * ),
- * @OA\Post(
+ * @OA\Get(
  * path="/assets/{id}",
+ * summary="Retrieve user's asset",
+ * description="Retrieve user's asset",
+ * operationId="assetsGetOne",
+ * tags={"assets"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *    response=200,
+ *    description="Success",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="true"),
+ *       @OA\Property(property="data", type="object"),
+ *       @OA\Property(property="message", type="string", example="Asset retrieved successfully.")
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=401,
+ *    description="User should be authorized to get assets information",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+ *    )
+ * )
+ * ),
+ * @OA\Post(
+ * path="/assets",
  * summary="Store asset",
  * description="Store asset",
  * operationId="assetsStore",
@@ -78,6 +102,71 @@ use Illuminate\Validation\Rule;
  *    description="Unauthorised",
  *    @OA\JsonContent(
  *       @OA\Property(property="message", type="string", example="Unauthorised")
+ *    )
+ * )
+ * ),
+@OA\Put(
+ * path="/assets/{id}",
+ * summary="Update asset",
+ * description="Update asset",
+ * operationId="assetsUpdate",
+ * tags={"assets"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass updated asset information",
+ *    @OA\JsonContent(
+ *       required={"label","currency","value"},
+ *       @OA\Property(property="label", type="string", example="some item"),
+ *       @OA\Property(property="currency", type="string", example="BTC|ETH|IOTA"),
+ *       @OA\Property(property="value", type="string", example="0.89"),
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Asset updated successfully",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="true"),
+ *       @OA\Property(property="message", type="string", example="Asset created successfully"),
+ *       @OA\Property(property="data", type="object", example="Asset object"),
+ *     )
+ * ),
+ * @OA\Response(
+ *    response=404,
+ *    description="Validation error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="false"),
+ *       @OA\Property(property="message", type="string", example="Validation error"),
+ *       @OA\Property(property="data", type="object", example="Errors object"),
+ *     )
+ * ),
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorised",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Unauthorised")
+ *    )
+ * )
+ * ),
+ * @OA\Delete(
+ * path="/assets/{id}",
+ * summary="Delete user's asset",
+ * description="Delete user's asset",
+ * operationId="assetsDelete",
+ * tags={"assets"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *    response=200,
+ *    description="Success",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="true"),
+ *       @OA\Property(property="message", type="string", example="Asset deleted successfully.")
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=401,
+ *    description="User should be authorized to get assets information",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Unauthenticated"),
  *    )
  * )
  * ),
@@ -128,7 +217,7 @@ class AssetController extends BaseController
 
         return $this->sendResponse(
             new AssetResource($asset),
-            'Product retrieved successfully.'
+            'Asset retrieved successfully.'
         );
     }
 
