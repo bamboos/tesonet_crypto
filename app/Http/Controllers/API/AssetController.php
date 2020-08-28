@@ -10,6 +10,79 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Validation\Rule;
 
+/**
+ * @OA\Get(
+ * path="/assets",
+ * summary="Retrieve all user's assets",
+ * description="Retrieve all user's assets",
+ * operationId="assetsList",
+ * tags={"assets"},
+ * security={ {"bearer": {} }},
+ * @OA\Response(
+ *    response=200,
+ *    description="Success",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="true"),
+ *       @OA\Property(property="data", type="array",
+ *          @OA\Items(
+ *              type="object"
+ *          )
+ *       ),
+ *       @OA\Property(property="message", type="string", example="Assets retrieved successfully.")
+ *    )
+ * ),
+ * @OA\Response(
+ *    response=401,
+ *    description="User should be authorized to get assets information",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Unauthenticated"),
+ *    )
+ * )
+ * ),
+ * @OA\Post(
+ * path="/assets/{id}",
+ * summary="Store asset",
+ * description="Store asset",
+ * operationId="assetsStore",
+ * tags={"assets"},
+ * @OA\RequestBody(
+ *    required=true,
+ *    description="Pass new asset information",
+ *    @OA\JsonContent(
+ *       required={"label","currency","value"},
+ *       @OA\Property(property="label", type="string", example="some item"),
+ *       @OA\Property(property="currency", type="string", example="BTC|ETH|IOTA"),
+ *       @OA\Property(property="value", type="string", example="0.89"),
+ *    ),
+ * ),
+ * @OA\Response(
+ *    response=200,
+ *    description="Asset created successfully",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="true"),
+ *       @OA\Property(property="message", type="string", example="Asset created successfully"),
+ *       @OA\Property(property="data", type="object", example="Asset object"),
+ *     )
+ * ),
+* @OA\Response(
+ *    response=404,
+ *    description="Validation error",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="success", type="bool", example="false"),
+ *       @OA\Property(property="message", type="string", example="Validation error"),
+ *       @OA\Property(property="data", type="object", example="Errors object"),
+ *     )
+ * ),
+ * @OA\Response(
+ *    response=401,
+ *    description="Unauthorised",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="message", type="string", example="Unauthorised")
+ *    )
+ * )
+ * ),
+ */
+
 class AssetController extends BaseController
 {
     public function index(): JsonResponse
