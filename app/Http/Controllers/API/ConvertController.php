@@ -55,7 +55,7 @@ use Illuminate\Http\JsonResponse;
  *    )
  * )
  * ),
- *
+ */
 
 class ConvertController extends BaseController
 {
