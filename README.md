@@ -10,3 +10,5 @@
 - Use some HTTP client (Postman) to test API requests (view swagger documentation [http://localhost:8080/api/docs](http://localhost:8080/api/docs))
 
 System uses external prices exchange API from [https://www.cryptonator.com/api/](https://www.cryptonator.com/api/).
+
+To run tests execute `docker exec -it tesonet_web php artisan test`
